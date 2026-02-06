@@ -11,7 +11,21 @@ The pipeline removes background noise, smooths image textures, converts images i
 
 The system demonstrates how multiple image-processing filters can be combined into a single automated workflow.
 
-## How to Run Locally
+## 🖼️ OpenCV Function Reference
+The following OpenCV functions were used in this milestone:
+
+* cv2.cvtColor() — Converts images between color spaces (BGR, RGB, Grayscale)
+* cv2.GaussianBlur() — Applies Gaussian smoothing to reduce noise
+* cv2.bilateralFilter() — Smooths image while preserving edges
+* cv2.Canny() — Detects edges in the image
+* cv2.threshold() — Converts grayscale image into binary image
+* cv2.addWeighted() — Blends two images together
+* cv2.bitwise_and() — Applies masking to isolate image regions
+* cv2.getStructuringElement() — Creates kernel for morphological operations
+* cv2.morphologyEx() — Performs morphological transformations
+* cv2.dilate() — Expands object boundaries in a binary image
+
+## ▶️ How to Run Locally
 Follow these steps to run the project on your computer:
 
 1. Clone the repository
