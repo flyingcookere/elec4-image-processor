@@ -29,16 +29,13 @@ The following OpenCV functions were used in this milestone:
 Follow these steps to run the project on your computer:
 
 1. Clone the repository
-git clone <repository-url>
-
+(git clone <repository-url>)
 2. Navigate into the project folder
-cd project-folder
-
+(cd project-folder)
 3. Install dependencies
-pip install opencv-python numpy pytest
-
+(pip install opencv-python numpy pytest)
 4. Run the image processing script
-python main.py
+(python main.py)
 
 
 
