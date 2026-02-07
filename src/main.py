@@ -2,6 +2,7 @@ import os
 import sys
 import cv2
 
+from filter_01_bg_removal import apply as bg_remove
 from filter_02_gaussian_blur import apply as blur
 from filter_03_grayscale import apply as to_gray
 
@@ -21,8 +22,13 @@ def main():
 
     os.makedirs("output", exist_ok=True)
 
+    # FILTER 1: Background Removal
+    subject, fg_mask = bg_remove(image)
+    cv2.imwrite("output/01_subject.png", subject)
+    cv2.imwrite("output/01_fg_mask.png", fg_mask)
+
     # FILTER 2: Gaussian Blur (noise reduction)
-    blurred = blur(image, ksize=11)
+    blurred = blur(subject, ksize=11)
     cv2.imwrite("output/02_gaussian_blur.png", blurred)
 
     # FILTER 3: Grayscale conversion
