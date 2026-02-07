@@ -37,7 +37,21 @@ Follow these steps to run the project on your computer:
 4. Run the image processing script
 (python main.py)
 
+> **Documenter Source:** *Project Board "Done" Column + Merged Pull Requests.*
 
+|       ID   |            System Requirement         |   Status   |                 Verification (Link)          |
+| --- -------| --------------------------------------- | ------ | ---------------------------------------------------------------- |
+| **REQ-01** | Auto-detect images in input directory | ✅ DONE | [https://github.com/flyingcookere/elec4-image-processor/milestone/2] |
+| **REQ-02** | Apply 2+ OpenCV techniques | ✅ DONE | [https://github.com/flyingcookere/elec4-image-processor/milestone/2 , https://github.com/flyingcookere/elec4-image-processor/milestone/3] |
+| **REQ-03** | Save to output directory | ✅ DONE | [Link to PR # *milestone 4*] |
+| **REQ-04** | GitHub Actions Pipeline (Run on Push) | ✅ DONE | [https://github.com/flyingcookere/elec4-image-processor/milestone/1] |
+
+## ✨ Key Features
+
+* **Automated Detection**: Script scans for supported image formats (JPG, PNG) in `/input`.
+* **OpenCV Suite**: High-performance transformations including Grayscale and Edge Detection.
+* **Validation Layer**: Integrated **PyTest** suite for logic verification.
+* **Infrastructure as Code**: **Docker** support for platform-independent execution.
 
 Prerequisites
 Python Version: 3.10+
