@@ -41,3 +41,25 @@ def test_blur_filter_logic():
     proc_sharpness = cv2.Laplacian(processed, cv2.CV_64F).var()
     
     assert proc_sharpness < orig_sharpness
+
+def test_background_removal_logic():
+    # Update this to whatever the script names the background-removed file
+    output_path = "output/01_fg_mask.png" 
+    output_path = "output/01_subject.png" 
+
+    
+    img = cv2.imread(output_path)
+    assert img is not None, f"File {output_path} not found!"
+
+    # Verification: Check for "White Background"
+    # The filter is designed to place the subject on a pure white background (255, 255, 255)
+    # We check if at least some pixels in the corners are pure white
+    top_left_pixel = img[0, 0]
+    assert all(top_left_pixel == [255, 255, 255]), "Background removal failed: Top-left is not white!"
+    
+    # Advanced check: Ensure it's not JUST a white square (the subject should exist)
+    # If the standard deviation is 0, the whole image is one solid color
+    assert img.std() > 0, "Background removal failed: Output is just a solid color!"
+
+
+    
