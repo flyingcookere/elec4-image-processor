@@ -6,30 +6,29 @@ on:
   pull_request:
     branches: [ "main" ]
 
+# --- REQUIRED FOR PR COMMENTS (Advanced Reporting) ---
+permissions:
+  pull-requests: write
+  contents: read
+
 jobs:
   quality-gate:
     runs-on: ubuntu-latest
     steps:
       - name: Check out code
         uses: actions/checkout@v4
-
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-
       - name: Install Linting Tools
         run: pip install flake8
-
       - name: Run Linting (The Gate)
-        run: |
-          # Stops the build if there are Python syntax errors or undefined names
-          flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
+        run: flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
 
   build:
     needs: quality-gate
     runs-on: ubuntu-latest
-
     steps:
     - name: 1. Check out the latest code
       uses: actions/checkout@v4
@@ -49,16 +48,27 @@ jobs:
         python -m pip install --upgrade pip
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
 
-    - name: 3.5 Create directory structure
-      run: mkdir -p output
-
-    - name: 4. Execute pytest
+    - name: 3.5 Create directory structure & Log file (Operate)
       run: |
-        pytest
+        mkdir -p output
+        echo "Pipeline started at $(date)" > output/run.log
 
-    - name: 5. Archive processed images
-      if: success()
+    - name: 4. Execute pytest (Test & Monitor)
+      run: |
+        pytest --html=report.html --self-contained-html >> output/run.log 2>&1
+
+    - name: 5. Archive Results (Release & Deploy)
+      if: always()
       uses: actions/upload-artifact@v4
       with:
-        name: processed-outlines
-        path: output/
+        name: Rotify-Quality-Package-Run-${{ github.run_number }}
+        path: |
+          output/
+          report.html
+
+    - name: 6. Advanced PR Link (Monitor/Feedback)
+      uses: mshick/add-pr-comment@v2
+      if: always() && github.event_name == 'pull_request'
+      with:
+        message: |
+          **Quality Gate results are ready for review!** [View Test Report & Log Artifacts](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}#artifacts)
