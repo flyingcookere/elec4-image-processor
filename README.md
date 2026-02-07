@@ -56,7 +56,7 @@ Follow these steps to run the project on your computer:
 | :--- | :--- | :--- | :--- |
 | **REQ-01** | Auto-detect images in input directory | ✅ DONE | [Milestone 2](https://github.com/flyingcookere/elec4-image-processor/milestone/2) |
 | **REQ-02** | Apply 2+ OpenCV techniques | ✅ DONE | [Milestone 2](https://github.com/flyingcookere/elec4-image-processor/milestone/2), [Milestone 3](https://github.com/flyingcookere/elec4-image-processor/milestone/3) |
-| **REQ-03** | Save to output directory | ✅ DONE | [Milestone 4](https://github.com/flyingcookere/elec4-image-processor/milestone/4) |
+| **REQ-03** | Save to output directory | ✅ DONE | [Milestone 4] |
 | **REQ-04** | GitHub Actions Pipeline (Run on Push) | ✅ DONE | [Milestone 1](https://github.com/flyingcookere/elec4-image-processor/milestone/1) |
 
 ## ✨ Key Features
