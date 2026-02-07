@@ -6,7 +6,6 @@ on:
   pull_request:
     branches: [ "main" ]
 
-# --- REQUIRED FOR PR COMMENTS (Advanced Reporting) ---
 permissions:
   pull-requests: write
   contents: read
@@ -55,9 +54,7 @@ jobs:
 
     - name: 4. Execute pytest (Test & Monitor)
       run: |
-        # Create the log file first so it exists
         echo "Starting tests..." > output/run.log
-        # Run pytest normally. If it fails, the whole job fails (the Gate).
         pytest --html=report.html --self-contained-html
 
     - name: 5. Archive Results (Release & Deploy)
