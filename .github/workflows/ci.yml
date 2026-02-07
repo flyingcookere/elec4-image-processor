@@ -55,9 +55,11 @@ jobs:
 
     - name: 4. Execute pytest (Test & Monitor)
       run: |
-        ls -R tests/  
-        pytest --html=report.html --self-contained-html >> output/run.log 2>&1
-        
+        # Create the log file first so it exists
+        echo "Starting tests..." > output/run.log
+        # Run pytest normally. If it fails, the whole job fails (the Gate).
+        pytest --html=report.html --self-contained-html
+
     - name: 5. Archive Results (Release & Deploy)
       if: always()
       uses: actions/upload-artifact@v4
