@@ -215,3 +215,12 @@ __pycache__/
 marimo/_static/
 marimo/_lsp/
 __marimo__/
+
+# --- Project Rotify Specifics ---
+# Ignore all files in these directories (images, logs, etc.)
+input/*
+output/*
+
+# But do NOT ignore the .gitkeep files so the folders stay in the repo
+!input/.gitkeep
+!output/.gitkeep
