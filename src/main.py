@@ -2,35 +2,34 @@ import os
 import sys
 import cv2
 
-OUTPUT_DIR = "output"
-VALID_EXTS = (".jpg", ".jpeg", ".png")
+from filter_02_gaussian_blur import apply as blur
+from filter_03_grayscale import apply as to_gray
 
 
 def main():
+    # Check for input image argument
     if len(sys.argv) < 2:
-        print("Usage: python main.py <image_path>")
-        return
+        print("Usage: python main.py <input_image>")
+        sys.exit(1)
 
     input_path = sys.argv[1]
-
-    if not input_path.lower().endswith(VALID_EXTS):
-        print("❌ Invalid file type")
-        return
-
     image = cv2.imread(input_path)
+
     if image is None:
         print("❌ Image not found:", input_path)
-        return
+        sys.exit(1)
 
-    os.makedirs(OUTPUT_DIR, exist_ok=True)
+    os.makedirs("output", exist_ok=True)
 
-    filename = os.path.basename(input_path)
-    name, _ = os.path.splitext(filename)
-    output_path = os.path.join(OUTPUT_DIR, f"{name}_output.png")
+    # FILTER 2: Gaussian Blur (noise reduction)
+    blurred = blur(image, ksize=11)
+    cv2.imwrite("output/02_gaussian_blur.png", blurred)
 
-    cv2.imwrite(output_path, image)
-    print(f"✅ Saved: {output_path}")
-    print("✅ DONE")
+    # FILTER 3: Grayscale conversion
+    gray = to_gray(blurred)
+    cv2.imwrite("output/03_grayscale.png", gray)
+
+    print("✅ DONE. Outputs saved in /output")
 
 
 if __name__ == "__main__":
