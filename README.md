@@ -14,16 +14,23 @@ The system demonstrates how multiple image-processing filters can be combined in
 ## 🖼️ OpenCV Function Reference
 The following OpenCV functions were used in this milestone:
 
-* cv2.cvtColor() — Converts images between color spaces (BGR, RGB, Grayscale)
-* cv2.GaussianBlur() — Applies Gaussian smoothing to reduce noise
-* cv2.bilateralFilter() — Smooths image while preserving edges
-* cv2.Canny() — Detects edges in the image
-* cv2.threshold() — Converts grayscale image into binary image
-* cv2.addWeighted() — Blends two images together
-* cv2.bitwise_and() — Applies masking to isolate image regions
-* cv2.getStructuringElement() — Creates kernel for morphological operations
-* cv2.morphologyEx() — Performs morphological transformations
-* cv2.dilate() — Expands object boundaries in a binary image
+1. Pre-Processing (Cleaning the Data)
+cv2.cvtColor(): The first step in the pipeline. It converts the raw BGR image to Grayscale to reduce data complexity.
+cv2.GaussianBlur(): Used to reduce pixel noise by averaging pixel values with a Gaussian kernel.
+cv2.bilateralFilter(): A more advanced smoothing technique used to remove noise while keeping the edges sharp.
+
+2. Segmentation & Edge Detection (Finding Shapes)
+cv2.Canny(): The primary edge detection algorithm used to find the outlines of objects based on intensity gradients.
+cv2.threshold(): Converts a grayscale image into a Binary (Black and White) image, effectively separating the "object" from the "background."
+
+3. Morphological Operations (Refining the Outline)
+cv2.getStructuringElement(): Defines the "shape" (kernel) used for morphological math.
+cv2.morphologyEx(): Performs advanced operations like "Closing" or "Opening" to remove tiny holes inside the detected objects.
+cv2.dilate(): Expands the white pixels in a binary image to make thin outlines thicker and more visible.
+
+4. Image Logic & Composition
+cv2.bitwise_and(): A bitwise operation used to apply a "mask" to an image (e.g., showing only the part of the image inside a detected shape).
+cv2.addWeighted(): Blends two images together (often used to overlay detected edges back onto the original photo for visualization).
 
 ## ▶️ How to Run Locally
 Follow these steps to run the project on your computer:
