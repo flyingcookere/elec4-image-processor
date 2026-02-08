@@ -4,6 +4,7 @@ import pytest
 import cv2
 import numpy as np
 import glob
+import sys 
 
 my_env = os.environ.copy()
 my_env["PYTHONIOENCODING"] = "utf-8"
@@ -14,9 +15,8 @@ input_images = glob.glob(os.path.join("input", "*.jpg")) + glob.glob(os.path.joi
 
 @pytest.mark.parametrize("image_path", input_images)
 def test_filters_execution(image_path):
-    """Checks if the script runs successfully for the given image."""
-    result = subprocess.run(['python', 'src/main.py', image_path], 
-                            capture_output=True, text=True, encoding='utf-8', env=my_env)
+    result = subprocess.run([sys.executable, 'src/main.py', image_path],
+                        capture_output=True, text=True, encoding='utf-8', env=my_env)
     
     assert "DONE" in result.stdout, f"Execution failed for {image_path}: {result.stdout}"
     assert os.path.exists("output")
