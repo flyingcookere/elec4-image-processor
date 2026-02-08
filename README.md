@@ -54,10 +54,12 @@ Follow these steps to run the project on your computer:
 
 | ID | System Requirement | Status | Verification (Link) |
 | :--- | :--- | :--- | :--- |
-| **REQ-01** | Auto-detect images in input directory | ✅ DONE | [Milestone 2](https://github.com/flyingcookere/elec4-image-processor/milestone/2) |
-| **REQ-02** | Apply 2+ OpenCV techniques | ✅ DONE | [Milestone 2](https://github.com/flyingcookere/elec4-image-processor/milestone/2), [Milestone 3](https://github.com/flyingcookere/elec4-image-processor/milestone/3) |
+| **REQ-01** | Auto-detect images in input directory | ✅ DONE | [(https://github.com/flyingcookere/elec4-image-processor/milestone/2)] |
+| **REQ-02** | Apply 2+ OpenCV techniques | ✅ DONE | [(https://github.com/flyingcookere/elec4-image-processor/milestone/2), (https://github.com/flyingcookere/elec4-image-processor/milestone/3) ]|
 | **REQ-03** | Save to output directory | ✅ DONE | [Milestone 4] |
-| **REQ-04** | GitHub Actions Pipeline (Run on Push) | ✅ DONE | [Milestone 1](https://github.com/flyingcookere/elec4-image-processor/milestone/1) |
+| **REQ-04** | GitHub Actions Pipeline (Run on Push) | ✅ DONE | [ (https://github.com/flyingcookere/elec4-image-processor/milestone/1) ]|
+| **REQ-05** | Advanced Segmentation (GrabCut) | ✅ DONE | [Pull Request #Link](YOUR_GRABCUT_PR_URL_HERE) |
+| **REQ-06** | Edge Detection (Canny Filter) | ✅ DONE | [ https://github.com/flyingcookere/elec4-image-processor/milestone/3] |
 
 ## ✨ Key Features
 
@@ -65,6 +67,15 @@ Follow these steps to run the project on your computer:
 * **OpenCV Suite**: High-performance transformations including Grayscale and Edge Detection.
 * **Validation Layer**: Integrated **PyTest** suite for logic verification.
 * **Infrastructure as Code**: **Docker** support for platform-independent execution.
+
+### 📸 Visual Gallery & Verification
+
+> **Documenter Source:** *Verification of REQ-05 and REQ-06*
+
+| Step | Transformation Technique | Visual Proof |
+| :--- | :--- | :--- |
+| **01** | **Canny Edge Detection** | <img width="200" alt="Linear_raw" src="https://github.com/user-attachments/assets/af4a2bd5-8ad7-487b-9ba3-5f565aa48243" /> |
+| **02** | **Morphological Closing** | <img width="200" alt="Morphological" src="https://github.com/user-attachments/assets/b67d8cc1-bec5-45a4-9c8d-b3f0f0782e55" /> |
 
 Prerequisites
 Python Version: 3.10+
