@@ -3,7 +3,7 @@ import subprocess
 import pytest
 import cv2
 import numpy as np
-import sys #
+import sys 
 
 my_env = os.environ.copy()
 my_env["PYTHONIOENCODING"] = "utf-8"
