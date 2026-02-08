@@ -74,8 +74,8 @@ Follow these steps to run the project on your computer:
 
 | Step | Transformation Technique | Visual Proof |
 | :--- | :--- | :--- |
-| **01** | **Canny Edge Detection** | <img width="200" alt="Linear_raw" src="https://github.com/user-attachments/assets/af4a2bd5-8ad7-487b-9ba3-5f565aa48243" /> |
-| **02** | **Morphological Closing** | <img width="200" alt="Morphological" src="https://github.com/user-attachments/assets/b67d8cc1-bec5-45a4-9c8d-b3f0f0782e55" /> |
+| **01** | **Canny Edge Detection** | <img width="250" alt="Linear_raw" src="https://github.com/user-attachments/assets/af4a2bd5-8ad7-487b-9ba3-5f565aa48243" /> |
+| **02** | **Morphological Closing** | <img width="250" alt="Morphological" src="https://github.com/user-attachments/assets/b67d8cc1-bec5-45a4-9c8d-b3f0f0782e55" /> |
 
 Prerequisites
 Python Version: 3.10+
