@@ -1,4 +1,5 @@
 import os
+import sys
 import time
 import cv2
 
@@ -66,9 +67,14 @@ def process_one_image(input_path: str):
     cv2.imwrite(os.path.join(out_dir, "05_coloring_book.png"), coloring)
 
     print(f"✅ DONE: {filename} -> {out_dir}")
+    print("DONE")  # for tests that look for the literal string "DONE"
 
 
-def watch_and_process(poll_seconds: float = 1.0):
+def watch_and_process(poll_seconds: float = 1.0, idle_timeout_s: float = 120.0):
+    """
+    Watches INPUT_DIR for new images and processes them.
+    Exits automatically if no new images are processed for idle_timeout_s seconds.
+    """
     os.makedirs(OUTPUT_DIR, exist_ok=True)
 
     if not os.path.isdir(INPUT_DIR):
@@ -76,7 +82,8 @@ def watch_and_process(poll_seconds: float = 1.0):
         return
 
     print("👀 Watching input/ ... (Press CTRL+C to stop)")
-    processed = set()  # filenames already processed
+    processed = set()
+    last_new_file_time = time.time()
 
     while True:
         try:
@@ -85,19 +92,27 @@ def watch_and_process(poll_seconds: float = 1.0):
                 if f.lower().endswith(VALID_EXTS)
             ]
 
+            processed_any = False
+
             for f in files:
                 in_path = os.path.join(INPUT_DIR, f)
 
-                # skip if already processed this run
                 if f in processed:
                     continue
 
-                # wait until file copy is finished
                 if not is_file_stable(in_path):
                     continue
 
                 process_one_image(in_path)
                 processed.add(f)
+                processed_any = True
+                last_new_file_time = time.time()
+
+            # Exit if idle too long (no new photos processed)
+            if not processed_any and (time.time() - last_new_file_time) >= idle_timeout_s:
+                print(f"✅ DONE (idle {int(idle_timeout_s)}s, no new photos).")
+                print("DONE")
+                break
 
             time.sleep(poll_seconds)
 
@@ -107,7 +122,13 @@ def watch_and_process(poll_seconds: float = 1.0):
 
 
 def main():
-    watch_and_process(poll_seconds=1.0)
+    # If a file path is provided (pytest/CLI), process once and exit.
+    if len(sys.argv) >= 2:
+        process_one_image(sys.argv[1])
+        return
+
+    # Otherwise: interactive watcher that auto-exits after 2 minutes idle.
+    watch_and_process(poll_seconds=1.0, idle_timeout_s=120.0)
 
 
 if __name__ == "__main__":
