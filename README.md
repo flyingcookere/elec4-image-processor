@@ -58,7 +58,7 @@ Follow these steps to run the project on your computer:
 | **REQ-02** | Apply 2+ OpenCV techniques | ✅ DONE | [(https://github.com/flyingcookere/elec4-image-processor/milestone/2), (https://github.com/flyingcookere/elec4-image-processor/milestone/3) ]|
 | **REQ-03** | Save to output directory | ✅ DONE | [Milestone 4] |
 | **REQ-04** | GitHub Actions Pipeline (Run on Push) | ✅ DONE | [ (https://github.com/flyingcookere/elec4-image-processor/milestone/1) ]|
-| **REQ-05** | Advanced Segmentation (GrabCut) | ✅ DONE | [Pull Request #Link](YOUR_GRABCUT_PR_URL_HERE) |
+| **REQ-05** | Advanced Segmentation (GrabCut) | ✅ DONE | https://github.com/flyingcookere/elec4-image-processor/pull/16 |
 | **REQ-06** | Edge Detection (Canny Filter) | ✅ DONE | [ https://github.com/flyingcookere/elec4-image-processor/milestone/3] |
 
 ## ✨ Key Features
@@ -70,21 +70,16 @@ Follow these steps to run the project on your computer:
 
 ### 📸 Visual Gallery & Verification
 
-> **Documenter Source:** *Verification of REQ-05 and REQ-06*
-
-### 📸 Pipeline Execution & Visual Verification
-
-### 📸 Pipeline Execution & Visual Verification
 
 | Step | Transformation Technique | Source Code Reference | Visual Proof |
 | :--- | :--- | :--- | :--- |
-| **01** | **Background Removal** | `docs/screenshots/subjectonwhite.png` | <img width="250" alt="BG_Removal" src="ddocs/screenshots/subjectonwhite.png" /> |
-| **01a** | **Mask (Loose)** | `docs/screenshots/maskloose.png` | <img width="250" alt="Mask_Loose" src="docs/screenshots/maskloose.png" /> |
-| **01b** | **Mask (Refined)** | `docs/screenshots/mask.png` | <img width="250" alt="Mask_Refined" src="docs/screenshots/mask.png" /> |
-| **02** | **Gaussian Blur** | `docs/screenshots/gaussianblurr.png` | <img width="250" alt="Gaussian_Blur" src="ddocs/screenshots/gaussianblurr.png" /> |
-| **03** | **Grayscale Conversion** | `docs/screenshots/grayscale.png` | <img width="250" alt="Grayscale" src="docs/screenshots/grayscale.png" /> |
-| **04** | **Canny Edge Detection** | `docs/screenshots/edge_detect.png` | <img width="250" alt="Linear_raw" src="docs/screenshots/edge_detect.png" /> |
-| **05** | **Morphological Closing** | `docs/screenshots/morphology.png` | <img width="250" alt="Morphological" src="docs/screenshots/morphology.png" /> |
+| **01** | **Background Removal** | `src/filter_01_bg_removal.py` | <img width="250" alt="BG_Removal" src="docs/screenshots/subjectonwhite.png" /> |
+| **01a** | **Mask (Loose)** | `src/filter_01_bg_removal.py` | <img width="250" alt="Mask_Loose" src="docs/screenshots/maskloose.png" /> |
+| **01b** | **Mask (Refined)** | `src/filter_01_bg_removal.py` | <img width="250" alt="Mask_Refined" src="docs/screenshots/mask.png" /> |
+| **02** | **Gaussian Blur** | `src/filter_02_gaussian_blur.py` | <img width="250" alt="Gaussian_Blur" src="docs/screenshots/gaussianblurr.png" /> |
+| **03** | **Grayscale Conversion** | `src/filter_03_grayscale.py` | <img width="250" alt="Grayscale" src="docs/screenshots/grayscale.png" /> |
+| **04** | **Canny Edge Detection** | `src/filter_04_edge_detect.py` | <img width="250" alt="Linear_raw" src="docs/screenshots/edge_detect.png" /> |
+| **05** | **Morphological Closing** | `src/filter_05_morphology.py` | <img width="250" alt="Morphological" src="docs/screenshots/morphology.png" /> |
 
 Prerequisites
 Python Version: 3.10+
