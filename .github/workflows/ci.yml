@@ -13,6 +13,7 @@ permissions:
 jobs:
   quality-gate:
     runs-on: ubuntu-latest
+    timeout-minutes: 5
     steps:
       - name: Check out code
         uses: actions/checkout@v4
@@ -28,6 +29,7 @@ jobs:
   build:
     needs: quality-gate
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     steps:
     - name: 1. Check out the latest code
       uses: actions/checkout@v4
@@ -53,6 +55,7 @@ jobs:
         echo "Pipeline started at $(date)" > output/run.log
 
     - name: 4. Execute pytest (Test & Monitor)
+      timeout-minutes: 10
       run: |
         echo "Starting tests..." > output/run.log
         pytest --html=report.html --self-contained-html
@@ -71,4 +74,4 @@ jobs:
       if: always() && github.event_name == 'pull_request'
       with:
         message: |
-          **Quality Gate results are ready for review!** [View Test Report & Log Artifacts](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}#artifacts)
+          Quality Gate results are ready for review! [View Test Report & Log Artifacts](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}#artifacts)
