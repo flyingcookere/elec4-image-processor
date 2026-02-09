@@ -61,7 +61,7 @@ jobs:
       if: always()
       uses: actions/upload-artifact@v4
       with:
-        name: Rotify-Quality-Package-Run-${{ github.run_number }}
+        name: Quality-Package-Run-${{ github.run_number }}
         path: |
           output/
           report.html
