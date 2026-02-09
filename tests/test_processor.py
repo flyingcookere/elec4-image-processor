@@ -8,7 +8,7 @@ my_env = os.environ.copy()
 my_env["PYTHONIOENCODING"] = "utf-8"
 
 def test_filters_execution():
-    input_file = "input/tota.jpg"
+    input_file = "input/ekal.jpg"
     # Run the script
     result = subprocess.run(['python', 'src/main.py', input_file], 
                             capture_output=True, text=True, encoding='utf-8', env=my_env)
