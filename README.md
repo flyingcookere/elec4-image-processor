@@ -52,14 +52,14 @@ Follow these steps to run the project on your computer:
 
 ## 🚦 Status & Traceability Matrix
 
-| ID | System Requirement | Status | Verification (Link) |
-| :--- | :--- | :--- | :--- |
-| **REQ-01** | Auto-detect images in input directory | ✅ DONE | [(https://github.com/flyingcookere/elec4-image-processor/milestone/2)] |
-| **REQ-02** | Apply 2+ OpenCV techniques | ✅ DONE | [(https://github.com/flyingcookere/elec4-image-processor/milestone/2), (https://github.com/flyingcookere/elec4-image-processor/milestone/3) ]|
-| **REQ-03** | Save to output directory | ✅ DONE | [Milestone 4] |
-| **REQ-04** | GitHub Actions Pipeline (Run on Push) | ✅ DONE | [ (https://github.com/flyingcookere/elec4-image-processor/milestone/1) ]|
-| **REQ-05** | Advanced Segmentation (GrabCut) | ✅ DONE | https://github.com/flyingcookere/elec4-image-processor/pull/16 |
-| **REQ-06** | Edge Detection (Canny Filter) | ✅ DONE | [ https://github.com/flyingcookere/elec4-image-processor/milestone/3] |
+### 📊 Status & Traceability Matrix
+
+| ID | System Requirement | Status | Milestone Link | Exact Pull Request |
+| :--- | :--- | :--- | :--- | :--- |
+| **REQ-01** | Auto-detect images in input directory | ✅ DONE | [https://github.com/flyingcookere/elec4-image-processor/milestone/2](| [https://github.com/flyingcookere/elec4-image-processor/issues/6] |
+| **REQ-02** | Apply 2+ OpenCV techniques | ✅ DONE | [https://github.com/flyingcookere/elec4-image-processor/milestone/3] | [https://github.com/flyingcookere/elec4-image-processor/issues/13 , https://github.com/flyingcookere/elec4-image-processor/issues/14] |
+| **REQ-03** | Save to output directory | ✅ DONE | [https://github.com/flyingcookere/elec4-image-processor/milestone/4] | [#13] |
+| **REQ-04** | GitHub Actions Pipeline (Run on Push) | ✅ DONE | [https://github.com/flyingcookere/elec4-image-processor/milestone/1] | [https://github.com/flyingcookere/elec4-image-processor/issues/3] |
 
 ## ✨ Key Features
 
