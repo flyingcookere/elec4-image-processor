@@ -72,10 +72,19 @@ Follow these steps to run the project on your computer:
 
 > **Documenter Source:** *Verification of REQ-05 and REQ-06*
 
-| Step | Transformation Technique | Visual Proof |
-| :--- | :--- | :--- |
-| **01** | **Canny Edge Detection** | <img width="250" alt="Linear_raw" src="https://github.com/user-attachments/assets/af4a2bd5-8ad7-487b-9ba3-5f565aa48243" /> |
-| **02** | **Morphological Closing** | <img width="250" alt="Morphological" src="https://github.com/user-attachments/assets/b67d8cc1-bec5-45a4-9c8d-b3f0f0782e55" /> |
+### 📸 Pipeline Execution & Visual Verification
+
+### 📸 Pipeline Execution & Visual Verification
+
+| Step | Transformation Technique | Source Code Reference | Visual Proof |
+| :--- | :--- | :--- | :--- |
+| **01** | **Background Removal** | `docs/screenshots/subjectonwhite.png` | <img width="250" alt="BG_Removal" src="ddocs/screenshots/subjectonwhite.png" /> |
+| **01a** | **Mask (Loose)** | `docs/screenshots/maskloose.png` | <img width="250" alt="Mask_Loose" src="docs/screenshots/maskloose.png" /> |
+| **01b** | **Mask (Refined)** | `docs/screenshots/mask.png` | <img width="250" alt="Mask_Refined" src="docs/screenshots/mask.png" /> |
+| **02** | **Gaussian Blur** | `docs/screenshots/gaussianblurr.png` | <img width="250" alt="Gaussian_Blur" src="ddocs/screenshots/gaussianblurr.png" /> |
+| **03** | **Grayscale Conversion** | `docs/screenshots/grayscale.png` | <img width="250" alt="Grayscale" src="docs/screenshots/grayscale.png" /> |
+| **04** | **Canny Edge Detection** | `docs/screenshots/edge_detect.png` | <img width="250" alt="Linear_raw" src="docs/screenshots/edge_detect.png" /> |
+| **05** | **Morphological Closing** | `docs/screenshots/morphology.png` | <img width="250" alt="Morphological" src="docs/screenshots/morphology.png" /> |
 
 Prerequisites
 Python Version: 3.10+
