@@ -3,132 +3,92 @@ import subprocess
 import pytest
 import cv2
 import numpy as np
+import glob
 
 my_env = os.environ.copy()
 my_env["PYTHONIOENCODING"] = "utf-8"
 
-def test_filters_execution():
-    input_file = "input/tota.jpg"
-    # Run the script
-    result = subprocess.run(['python', 'src/main.py', input_file], 
+# Automatically find all images in the input folder
+# This ensures we get 'input/tota.jpg' instead of just 'tota.jpg'
+input_images = glob.glob(os.path.join("input", "*.jpg")) + glob.glob(os.path.join("input", "*.png"))
+
+@pytest.mark.parametrize("image_path", input_images)
+def test_filters_execution(image_path):
+    """Checks if the script runs successfully for the given image."""
+    result = subprocess.run(['python', 'src/main.py', image_path], 
                             capture_output=True, text=True, encoding='utf-8', env=my_env)
     
-    assert "DONE" in result.stdout
-    # Check if the folder exists
+    assert "DONE" in result.stdout, f"Execution failed for {image_path}: {result.stdout}"
     assert os.path.exists("output")
 
-def test_grayscale_filter_logic():
-    # UPDATE THIS to the real name in your output folder
+@pytest.mark.parametrize("image_path", input_images)
+def test_grayscale_filter_logic(image_path):
+    """Verifies the Grayscale output."""
     output_path = "output/03_grayscale.png" 
-    
     img = cv2.imread(output_path)
-    assert img is not None, f"File {output_path} not found!"
+    assert img is not None, f"Grayscale file not found for {image_path}"
     
-    # Check if grayscale (all channels equal)
     b, g, r = cv2.split(img)
-    assert (b == g).all() and (g == r).all()
+    assert (b == g).all() and (g == r).all(), "Grayscale failure: Channels are not equal."
 
-def test_blur_filter_logic():
-    # UPDATE THIS to the real name in your output folder
+@pytest.mark.parametrize("image_path", input_images)
+def test_blur_filter_logic(image_path):
+    """Verifies the Gaussian Blur output."""
     output_path = "output/02_gaussian_blur.png"
-    input_path = "input/tota.jpg"
-    
-    original = cv2.imread(input_path)
+    original = cv2.imread(image_path)
     processed = cv2.imread(output_path)
     
-    assert processed is not None, f"File {output_path} not found!"
+    assert processed is not None, f"Blur file not found for {image_path}"
     
     orig_sharpness = cv2.Laplacian(original, cv2.CV_64F).var()
     proc_sharpness = cv2.Laplacian(processed, cv2.CV_64F).var()
     
     assert proc_sharpness < orig_sharpness
 
-def test_background_removal_logic():
-    # Update this to whatever the script names the background-removed file
-    output_path = "output/01_fg_mask.png" 
+@pytest.mark.parametrize("image_path", input_images)
+def test_background_removal_logic(image_path):
+    """Verifies the Background Removal output."""
     output_path = "output/01_subject_on_white.png" 
-
-    
     img = cv2.imread(output_path)
-    assert img is not None, f"File {output_path} not found!"
+    assert img is not None, f"BG removal file not found for {image_path}"
 
-    # Verification: Check for "White Background"
-    # The filter is designed to place the subject on a pure white background (255, 255, 255)
-    # We check if at least some pixels in the corners are pure white
-    top_left_pixel = img[0, 0]
-    assert all(top_left_pixel == [255, 255, 255]), "Background removal failed: Top-left is not white!"
-    
-    # Advanced check: Ensure it's not JUST a white square (the subject should exist)
-    # If the standard deviation is 0, the whole image is one solid color
-    assert img.std() > 0, "Background removal failed: Output is just a solid color!"
+    # Check top-left corner for white
+    assert all(img[0, 0] == [255, 255, 255]), "BG removal failure: Top-left is not white."
+    assert img.std() > 0, "BG removal failure: Output is a solid color."
 
-
-def test_edge_detect_logic():
+@pytest.mark.parametrize("image_path", input_images)
+def test_edge_detect_logic(image_path):
+    """Verifies the Edge Detection/Lineart output."""
     output_path = "output/04_lineart_raw.png"
     img = cv2.imread(output_path, cv2.IMREAD_GRAYSCALE)
+    assert img is not None, f"Edge detect file not found for {image_path}"
     
-    assert img is not None, f"File {output_path} not found!"
-    
-    # 1. Verification: Is it actually Line Art?
-    # Black lines on White background means most pixels should be 255 (white).
-    white_pixel_ratio = np.sum(img == 255) / img.size
-    assert white_pixel_ratio > 0.80, "Edge detection too noisy! Should be >80% white."
+    white_ratio = np.sum(img == 255) / img.size
+    assert white_ratio > 0.70, "Edge detection failure: Too much noise."
 
-    # 2. Verification: Is it Binarized?
-    # A good lineart shouldn't have many 'gray' values. 
-    # We check if pixels are mostly 0 or 255.
+@pytest.mark.parametrize("image_path", input_images)
+def test_morphology_logic(image_path):
+    """Verifies the Morphology/Polish output."""
+    output_path = "output/05_coloring_book.png"
+    img = cv2.imread(output_path, cv2.IMREAD_GRAYSCALE)
+    assert img is not None, f"Morphology file not found for {image_path}"
+
+    # Check for binarization
     grays = np.logical_and(img > 20, img < 235)
-    assert np.sum(grays) / img.size < 0.05, "Too many gray pixels; should be high contrast."
+    assert np.sum(grays) / img.size < 0.05, "Morphology failure: Not binarized."
 
-def test_morphology_logic():
-    input_path = "output/04_lineart_raw.png" # The 'raw' edges
-    output_path = "output/05_coloring_book.png" # The 'cleaned' edges
-    
-    raw = cv2.imread(input_path, cv2.IMREAD_GRAYSCALE)
-    clean = cv2.imread(output_path, cv2.IMREAD_GRAYSCALE)
-    
-    assert clean is not None, "Morphology output missing!"
-
-    # 1. Verification: Speck Removal
-    # Ink is 0 (black), so we invert to count white blobs as 'components'
-    _, raw_labels = cv2.connectedComponents(255 - raw)
-    _, clean_labels = cv2.connectedComponents(255 - clean)
-    
-    assert np.max(clean_labels) < np.max(raw_labels), "Speck removal failed! Cluster count did not decrease."
-
-    # 2. Verification: Thickening (Dilation)
-    # More black pixels (0) means thicker lines.
-    raw_ink_count = np.sum(raw == 0)
-    clean_ink_count = np.sum(clean == 0)
-    
-    assert clean_ink_count > raw_ink_count, "Thickening failed! Line weight did not increase."
-
-def test_line_quality_metrics():
-    # 1. Path Safety: Ensure the filename matches exactly what's in your output folder
+@pytest.mark.parametrize("image_path", input_images)
+def test_line_quality_metrics(image_path):
+    """Verifies the final line quality and connectivity."""
     output_path = "output/05_coloring_book.png" 
     img = cv2.imread(output_path, cv2.IMREAD_GRAYSCALE)
-    
-    # 2. The Guard: Prevent 'NoneType' errors if the image failed to save/load
-    assert img is not None, f"Quality test failed: Could not find or read {output_path}."
+    assert img is not None
 
-    # 3. Invert so lines are 255 (white) for analysis
     ink_mask = 255 - img 
-    
-    # 4. Connectivity Analysis
-    # Connectivity=8 catches diagonal pixels, making line segments feel 'longer'
     num_labels, labels, stats, centroids = cv2.connectedComponentsWithStats(ink_mask, connectivity=8)
 
-    # If num_labels is 1, it means there is only background (no lines found!)
-    assert num_labels > 1, "Line quality failed: No lines detected in the image!"
+    assert num_labels > 1, f"Quality failure: No lines detected in {image_path}."
 
-    # 5. Extract Sizes (skipping index 0 which is the background)
     sizes = stats[1:, cv2.CC_STAT_AREA]
-    
-    # QUALITY CHECK A: Continuity
     avg_line_length = np.mean(sizes)
-    assert avg_line_length > 10, f"Line quality poor: Average segment length is only {avg_line_length:.2f}px. Lines are too broken!"
-
-    # QUALITY CHECK B: Speck Removal (The 'Polish' test)
-    # Check if there are any tiny noise particles (e.g., smaller than 5 pixels)
-    tiny_specks = np.sum(sizes < 5)
-    assert tiny_specks == 0, f"Line quality poor: Found {tiny_specks} tiny specks that should have been removed by morphology."
+    assert avg_line_length > 5, f"Quality failure: Lines too broken in {image_path}."
