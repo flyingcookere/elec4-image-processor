@@ -1,4 +1,5 @@
-# [Project Title: Automated Image Processing Pipeline]
+### Project Title: Automated Image Processing Pipeline
+
 Automated Image Processing using DevOps CI Pipeline
 
 ## Requirements!!
@@ -15,6 +16,7 @@ The system demonstrates how multiple image-processing filters can be combined in
 The following OpenCV functions were used in this milestone:
 
 1. Pre-Processing (Cleaning the Data)
+
 cv2.cvtColor(): The first step in the pipeline. It converts the raw BGR image to Grayscale to reduce data complexity.
 
 cv2.GaussianBlur(): Used to reduce pixel noise by averaging pixel values with a Gaussian kernel.
@@ -22,11 +24,13 @@ cv2.GaussianBlur(): Used to reduce pixel noise by averaging pixel values with a 
 cv2.bilateralFilter(): A more advanced smoothing technique used to remove noise while keeping the edges sharp.
 
 2. Segmentation & Edge Detection (Finding Shapes)
+
 cv2.Canny(): The primary edge detection algorithm used to find the outlines of objects based on intensity gradients.
 
 cv2.threshold(): Converts a grayscale image into a Binary (Black and White) image, effectively separating the "object" from the "background."
 
 3. Morphological Operations (Refining the Outline)
+
 cv2.getStructuringElement(): Defines the "shape" (kernel) used for morphological math.
 
 cv2.morphologyEx(): Performs advanced operations like "Closing" or "Opening" to remove tiny holes inside the detected objects.
@@ -34,6 +38,7 @@ cv2.morphologyEx(): Performs advanced operations like "Closing" or "Opening" to 
 cv2.dilate(): Expands the white pixels in a binary image to make thin outlines thicker and more visible.
 
 4. Image Logic & Composition
+
 cv2.bitwise_and(): A bitwise operation used to apply a "mask" to an image (e.g., showing only the part of the image inside a detected shape).
 
 cv2.addWeighted(): Blends two images together (often used to overlay detected edges back onto the original photo for visualization).
@@ -66,7 +71,6 @@ python src/main.py
 pytest -vv -s
 ```
 
-## 🚦 Status & Traceability Matrix
 
 ### 📊 Status & Traceability Matrix
 
@@ -100,7 +104,7 @@ pytest -vv -s
 
 
 
-### ⚙️ DevOps & Observability Workflow (mima)
+### ⚙️ DevOps & Observability Workflow 
 **Configuration Path:** [`.github/workflows/ci.yml`](.github/workflows/ci.yml)
 
 The project implements a comprehensive *CI* (Continuous Integration) pipeline to ensure systemic reliability and shared visibility across the entire software lifecycle. This automation acts as a neutral middleman, ensuring that every code change is validated before being archived for release.
@@ -116,7 +120,7 @@ The project implements a comprehensive *CI* (Continuous Integration) pipeline to
   * **Traceability**: Every build is tagged with a unique run number, ensuring that every result in the output/ gallery can be traced back to the specific code version that generated it.
  
 
-## 📈 Process Evolution (Workflow & Documentation) (mima)
+## 📈 Process Evolution (Workflow & Documentation) 
 **Strategy**: Industry-Standard SDLC
 
 We implemented advanced Industry Workflows to maintain high velocity without sacrificing code quality. Our process is built on a "Shared Responsibility" foundation, ensuring every line of code is verified by the team before reaching the production state.
@@ -150,8 +154,7 @@ We implemented advanced Industry Workflows to maintain high velocity without sac
 
 
 
-
-## 🖼️ Image Processing Lead (jozza)
+### 🖼️ Image Processing Lead 
 
 ## 📥 Ingestion (Scanning the /input Directory)**
 
@@ -164,7 +167,7 @@ After ingestion, the image undergoes initial transformation to prepare it for ed
 To reduce noise and small texture details that may interfere with edge extraction, we used cv2.GaussianBlur() to smooth the image. This step minimizes high-frequency noise while preserving the overall structure of the subject.
 After noise reduction, the smoothed image is converted into grayscale using cv2.cvtColor() with the cv2.COLOR_BGR2GRAY flag. This conversion reduces the image to a single intensity channel, which is required for reliable edge detection since edges are based on changes in pixel intensity rather than color.
 
-## 🧠 Image Processing Logic
+### 🧠 Image Processing Logic
 
 ## ✂️ Canny Edge Detection (Edge Identification)**
 
@@ -263,7 +266,7 @@ A fallback mechanism guarantees final output generation.
 Implementation: process_one_image()
 
 
-## 🧪 Quality Assurance (Automated Testing)(Luis)
+## 🧪 Quality Assurance (Automated Testing)
 
 **Test Directory:** `tests/`  
 **Documenter Source:** `PyTest` terminal logs and GitHub Actions history
