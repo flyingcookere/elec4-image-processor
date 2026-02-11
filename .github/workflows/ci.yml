@@ -1,4 +1,4 @@
-name: Python CI
+name: Image Procesing Filter!!! 
 
 on:
   push:
@@ -6,31 +6,30 @@ on:
   pull_request:
     branches: [ "main" ]
 
+permissions:
+  pull-requests: write
+  contents: read
+
 jobs:
-  # --- NEW QUALITY GATE JOB ---
   quality-gate:
     runs-on: ubuntu-latest
+    timeout-minutes: 5
     steps:
       - name: Check out code
         uses: actions/checkout@v4
-
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-
       - name: Install Linting Tools
         run: pip install flake8
-
       - name: Run Linting (The Gate)
-        run: |
-          # Stops the build if there are Python syntax errors or undefined names
-          flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
+        run: flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
 
   build:
-    needs: quality-gate # This links the build to the quality gate
+    needs: quality-gate
     runs-on: ubuntu-latest
-
+    timeout-minutes: 15
     steps:
     - name: 1. Check out the latest code
       uses: actions/checkout@v4
@@ -50,16 +49,29 @@ jobs:
         python -m pip install --upgrade pip
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
 
-    - name: 3.5 Create directory structure
-      run: mkdir -p output
-
-    - name: 4. Execute pytest
+    - name: 3.5 Create directory structure & Log file (Operate)
       run: |
-        pytest
+        mkdir -p output
+        echo "Pipeline started at $(date)" > output/run.log
 
-    - name: 5. Archive processed images
-      if: success()
+    - name: 4. Execute pytest (Test & Monitor)
+      timeout-minutes: 10
+      run: |
+        echo "Starting tests..." > output/run.log
+        pytest --html=report.html --self-contained-html
+
+    - name: 5. Archive Results (Release & Deploy)
+      if: always()
       uses: actions/upload-artifact@v4
       with:
-        name: processed-outlines
-        path: output/
+        name: Quality-Package-Run-${{ github.run_number }}
+        path: |
+          output/
+          report.html
+
+    - name: 6. Advanced PR Link (Monitor/Feedback)
+      uses: mshick/add-pr-comment@v2
+      if: always() && github.event_name == 'pull_request'
+      with:
+        message: |
+          Quality Gate results are ready for review! [View Test Report & Log Artifacts](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}#artifacts)
