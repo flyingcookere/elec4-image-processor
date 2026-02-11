@@ -38,17 +38,33 @@ cv2.bitwise_and(): A bitwise operation used to apply a "mask" to an image (e.g.,
 
 cv2.addWeighted(): Blends two images together (often used to overlay detected edges back onto the original photo for visualization).
 
-## ▶️ How to Run Locally
+## ▶️ How to Run Locally 
 Follow these steps to run the project on your computer:
-
-1. Clone the repository
-(git clone < repository-url >)
-2. Navigate into the project folder
-(cd project-folder)
-3. Install dependencies
-(pip install opencv-python numpy pytest)
-4. Run the image processing script
-(python main.py)
+1. **Clone the Repository:** 
+```bash
+git clone https://github.com/flyingcookere/elec4-image-processor.git
+```
+2. **Navigate into the project folder**
+```bash
+cd elec4-image-processor
+```
+4. **Set up a Virtual Environment**
+```bash
+python -m venv venv
+.\venv\Scripts\activate
+```
+6. **Install dependencies**
+```bash
+pip install -r requirements.txt
+```
+8. **Run the image processing script**
+```bash
+python src/main.py
+```
+10. **Execute Automated Tests Verify the logic using the team's Shared Tools.**
+```bash
+pytest -vv -s
+`
 
 ## 🚦 Status & Traceability Matrix
 
@@ -80,6 +96,186 @@ Follow these steps to run the project on your computer:
 | **03** | **Grayscale Conversion** | `src/filter_03_grayscale.py` | <img width="250" alt="Grayscale" src="docs/screenshots/grayscale.png" /> |
 | **04** | **Canny Edge Detection** | `src/filter_04_edge_detect.py` | <img width="250" alt="Linear_raw" src="docs/screenshots/edge_detect.png" /> |
 | **05** | **Morphological Closing** | `src/filter_05_morphology.py` | <img width="250" alt="Morphological" src="docs/screenshots/morphology.png" /> |
+
+
+
+
+### ⚙️ DevOps & Observability Workflow (mima)
+**Configuration Path:** [`.github/workflows/ci.yml`](.github/workflows/ci.yml)
+
+The project implements a comprehensive *CI* (Continuous Integration) pipeline to ensure systemic reliability and shared visibility across the entire software lifecycle. This automation acts as a neutral middleman, ensuring that every code change is validated before being archived for release.
+
+* **Continuous Integration (CI)**
+  * **Linting**: Automatically executes Flake8 to enforce coding standards and catch syntax errors (E9, F63, F7, F82) before the build starts.
+  * **Logic Validation**: Runs the Pytest suite to verify OpenCV filter accuracy and image handling logic across test cases.
+* **Continuous Delivery & Release (CD)**
+  * **Operate**: Automatically initializes the output/ directory structure and logs start times to ensure a consistent workspace for every run.
+  * **Automated Artifact Packaging**: Upon successful testing, the pipeline archives the processing results and the HTML Test Report as a "Quality-Package-Run," making them available for immediate download.
+* **Continuous Feedback & Monitoring**
+  * **Shared Visibility**: Integrates Advanced PR Comments that link directly to build artifacts, allowing stakeholders to see real-time results without leaving the GitHub interface.
+  * **Traceability**: Every build is tagged with a unique run number, ensuring that every result in the output/ gallery can be traced back to the specific code version that generated it.
+ 
+
+## 📈 Process Evolution (Workflow & Documentation) (mima)
+**Strategy**: Industry-Standard SDLC
+
+We implemented advanced Industry Workflows to maintain high velocity without sacrificing code quality. Our process is built on a "Shared Responsibility" foundation, ensuring every line of code is verified by the team before reaching the production state.
+
+### 📋 Project Management & Traceability
+* **No Issue, No Work Policy**: Development is strictly demand-driven. No code is authored or merged unless it addresses a pre-existing, documented Issue in GitHub or Jira.
+* **Mandatory PR Linking**: Every Pull Request must be linked to specific Issues to create a permanent audit trail. This ensures Shared Visibility for all stakeholders.
+* **Granular Organization**:
+  * **Tags & Labels**: Issues utilize a multi-tag system (e.g., critical, feature, documentation) for efficient filtering and priority management.
+  * **Clear Ownership**: Every Issue is assigned to a specific collaborator, ensuring clear accountability for every project component.
+* **Automated Progress Tracking**: By leveraging GitHub Projects, version history and progress tracking are automated. This serves as the "Single Source of Truth" for the team to view real-time status without manual reporting.
+
+### 🖊️ Governance & Standardization
+* **Standardized Formatting**:
+  * **Commit Messages**: We follow a strict prefix-based convention to maintain a professional and readable Git history.
+  * **PR Titles**: Titles follow standardized naming conventions to facilitate easy auditing during release cycles.
+* **The Contributor's Guide**: A documentation resource was established to onboard collaborators and enforce standards regarding branching strategies and coding styles.
+* **Visual Proof of Work**: All PR descriptions are required to include screenshots or terminal logs (e.g., pytest output) as evidence of local verification.
+
+### 🛡️ Quality & Gatekeeper Protocols
+* **Gatekeeper Protocol**: A strict **No Direct Push** policy is enforced on the main branch to protect production-ready code. This is enforced via GitHub branch protection and the [**CODEOWNERS**] file.
+* **Automated Logic Validation**: Our GitHub Actions CI suite serves as an automated gatekeeper, running flake8 and pytest checks on every push. Merges are blocked unless all status checks pass.
+* **Zero Documentation Debt**: We maintain **Living Documentation** within the repository to ensure the README accurately reflects the exact state of the project board at all times.
+
+### 📂 Governance Resources
+| File / Resource | Location | Purpose | 
+| :--- | :--- | :--- |
+| **CODEOWNERS** | [`./.github/CODEOWNERS`](./.github/CODEOWNERS) | Automated assignment of code testers and reviewers for src/. | 
+| **CI Workflow** | [`.github/workflows/ci.yml`](./.github/workflows/ci.yml) | Automated gatekeeper for linting and logic validation. | 
+| **Project Board** | [GitHub Projects](https://github.com/users/flyingcookere/projects/2/views/1) | Automated tracking of milestones, tags, and assignees. |
+
+
+
+
+## 🖼️ Image Processing Lead (jozza)
+
+**📥 Ingestion (Scanning the /input Directory)**
+
+The image processing pipeline begins by scanning the /input directory for newly added image files. Once a stable image file is detected, it is loaded into the system using OpenCV. At this stage, no image enhancement or transformation is applied, as the primary objective is only to acquire the raw image data for processing.
+We used cv2.imread() to read the input image file and convert it into a matrix representation that can be processed by succeeding OpenCV functions.
+
+**🎛️ Initial Transformation (Gaussian Blur and Grayscale Conversion)**
+
+After ingestion, the image undergoes initial transformation to prepare it for edge detection.
+To reduce noise and small texture details that may interfere with edge extraction, we used cv2.GaussianBlur() to smooth the image. This step minimizes high-frequency noise while preserving the overall structure of the subject.
+After noise reduction, the smoothed image is converted into grayscale using cv2.cvtColor() with the cv2.COLOR_BGR2GRAY flag. This conversion reduces the image to a single intensity channel, which is required for reliable edge detection since edges are based on changes in pixel intensity rather than color.
+
+## 🧠 Image Processing Logic
+
+**✂️ Canny Edge Detection (Edge Identification)**
+
+To identify edges and object boundaries in the image, we used cv2.Canny(). This function detects edges by analyzing intensity gradients and locating areas with significant brightness changes.
+The Canny algorithm internally applies non-maximum suppression to thin the edges and uses a dual-threshold hysteresis process to classify strong and weak edges. Strong edges are retained, while weak edges are preserved only if they are connected to strong edges. This approach allows meaningful contours to be detected while suppressing isolated noise.
+
+**🧩 Morphological Closing (Boundary Refinement)**
+
+The edge map produced by the Canny detector may contain broken lines and small gaps. To refine these boundaries, we applied morphological closing.
+We used cv2.getStructuringElement() to define the shape and size of the morphological kernel. Using this kernel, we applied dilation with cv2.dilate() to connect broken edge segments, followed by erosion with cv2.erode() to restore proper line thickness.
+This sequence effectively performs morphological closing, which improves boundary continuity and produces smoother, more coherent outlines suitable for the final output.
+
+
+## 🧩 Image Processing Logic (Jozza, done)
+**👤 Ownership & Entry Point**
+
+Lead Engineer: Jozza
+
+Core Entry Point: src/main.py
+
+📦 Filter Modules
+
+- filter_01_bg_removal.py
+
+- filter_02_gaussian_blur.py
+
+- filter_03_grayscale.py
+
+- filter_04_edge_detect.py
+
+- filter_05_morphology.py
+
+The image processing engine is implemented using OpenCV (cv2) with AI-assisted background segmentation.
+The pipeline follows a deterministic, stage-based flow.
+
+<br>
+<br>
+
+**📥 Ingestion**
+
+src/main.py runs in an automated hot-folder mode that scans /input for valid image files.
+
+Detects supported file types
+
+Verifies file stability before processing
+
+Loads images using cv2.imread()
+
+Implementation: watch_and_process(), is_file_stable()
+
+<br>
+<br>
+
+**🧍 Background Removal**
+
+The subject is isolated using an AI-based background remover (U²-Net) to prevent unwanted background edges.
+
+Outputs subject-on-white image and foreground mask
+
+Mask is dilated using cv2.dilate() to preserve fine details
+
+File: filter_01_bg_removal.py
+
+<br>
+<br>
+
+**🎛️ Pre-Edge Conditioning**
+
+Gaussian Blur: Noise reduction using cv2.GaussianBlur()
+
+Grayscale: Intensity simplification using cv2.cvtColor(..., COLOR_BGR2GRAY)
+
+Files:
+filter_02_gaussian_blur.py, filter_03_grayscale.py
+
+<br>
+<br>
+
+**✂️ Edge Detection**
+
+Contours are extracted from the grayscale image, with background suppression using the foreground mask.
+
+File: filter_04_edge_detect.py
+Output: 04_lineart_raw.png
+
+<br>
+<br>
+
+**🧩 Morphological Refinement**
+
+Edges are cleaned and thickened for visual clarity.
+
+Noise removal
+
+Line reconnection and smoothing
+
+OpenCV Ops: connectedComponentsWithStats(), dilate(), medianBlur()
+File: filter_05_morphology.py
+Final Output: 05_coloring_book.png
+
+<br>
+<br>
+
+**💾 Export & Safety**
+
+All outputs are saved using cv2.imwrite().
+A fallback mechanism guarantees final output generation.
+
+Implementation: process_one_image()
+
+
 
 Prerequisites
 Python Version: 3.10+
