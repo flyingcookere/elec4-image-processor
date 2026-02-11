@@ -52,14 +52,14 @@ Follow these steps to run the project on your computer:
 
 ## 🚦 Status & Traceability Matrix
 
-| ID | System Requirement | Status | Verification (Link) |
-| :--- | :--- | :--- | :--- |
-| **REQ-01** | Auto-detect images in input directory | ✅ DONE | [(https://github.com/flyingcookere/elec4-image-processor/milestone/2)] |
-| **REQ-02** | Apply 2+ OpenCV techniques | ✅ DONE | [(https://github.com/flyingcookere/elec4-image-processor/milestone/2), (https://github.com/flyingcookere/elec4-image-processor/milestone/3) ]|
-| **REQ-03** | Save to output directory | ✅ DONE | [Milestone 4] |
-| **REQ-04** | GitHub Actions Pipeline (Run on Push) | ✅ DONE | [ (https://github.com/flyingcookere/elec4-image-processor/milestone/1) ]|
-| **REQ-05** | Advanced Segmentation (GrabCut) | ✅ DONE | [Pull Request #Link](YOUR_GRABCUT_PR_URL_HERE) |
-| **REQ-06** | Edge Detection (Canny Filter) | ✅ DONE | [ https://github.com/flyingcookere/elec4-image-processor/milestone/3] |
+### 📊 Status & Traceability Matrix
+
+| ID | System Requirement | Status | Milestone Link | Exact Pull Request |
+| :--- | :--- | :--- | :--- | :--- |
+| **REQ-01** | Auto-detect images in input directory | ✅ DONE | [https://github.com/flyingcookere/elec4-image-processor/milestone/2](| [https://github.com/flyingcookere/elec4-image-processor/issues/6] |
+| **REQ-02** | Apply 2+ OpenCV techniques | ✅ DONE | [https://github.com/flyingcookere/elec4-image-processor/milestone/3] | [https://github.com/flyingcookere/elec4-image-processor/issues/13 , https://github.com/flyingcookere/elec4-image-processor/issues/14] |
+| **REQ-03** | Save to output directory | ✅ DONE | [https://github.com/flyingcookere/elec4-image-processor/milestone/4] | [#13] |
+| **REQ-04** | GitHub Actions Pipeline (Run on Push) | ✅ DONE | [https://github.com/flyingcookere/elec4-image-processor/milestone/1] | [https://github.com/flyingcookere/elec4-image-processor/issues/3] |
 
 ## ✨ Key Features
 
@@ -70,12 +70,16 @@ Follow these steps to run the project on your computer:
 
 ### 📸 Visual Gallery & Verification
 
-> **Documenter Source:** *Verification of REQ-05 and REQ-06*
 
-| Step | Transformation Technique | Visual Proof |
-| :--- | :--- | :--- |
-| **01** | **Canny Edge Detection** | <img width="250" alt="Linear_raw" src="https://github.com/user-attachments/assets/af4a2bd5-8ad7-487b-9ba3-5f565aa48243" /> |
-| **02** | **Morphological Closing** | <img width="250" alt="Morphological" src="https://github.com/user-attachments/assets/b67d8cc1-bec5-45a4-9c8d-b3f0f0782e55" /> |
+| Step | Transformation Technique | Source Code Reference | Visual Proof |
+| :--- | :--- | :--- | :--- |
+| **01** | **Background Removal** | `src/filter_01_bg_removal.py` | <img width="250" alt="BG_Removal" src="docs/screenshots/subjectonwhite.png" /> |
+| **01a** | **Mask (Loose)** | `src/filter_01_bg_removal.py` | <img width="250" alt="Mask_Loose" src="docs/screenshots/maskloose.png" /> |
+| **01b** | **Mask (Refined)** | `src/filter_01_bg_removal.py` | <img width="250" alt="Mask_Refined" src="docs/screenshots/mask.png" /> |
+| **02** | **Gaussian Blur** | `src/filter_02_gaussian_blur.py` | <img width="250" alt="Gaussian_Blur" src="docs/screenshots/gaussianblurr.png" /> |
+| **03** | **Grayscale Conversion** | `src/filter_03_grayscale.py` | <img width="250" alt="Grayscale" src="docs/screenshots/grayscale.png" /> |
+| **04** | **Canny Edge Detection** | `src/filter_04_edge_detect.py` | <img width="250" alt="Linear_raw" src="docs/screenshots/edge_detect.png" /> |
+| **05** | **Morphological Closing** | `src/filter_05_morphology.py` | <img width="250" alt="Morphological" src="docs/screenshots/morphology.png" /> |
 
 Prerequisites
 Python Version: 3.10+
