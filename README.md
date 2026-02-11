@@ -178,25 +178,24 @@ We used cv2.getStructuringElement() to define the shape and size of the morpholo
 This sequence effectively performs morphological closing, which improves boundary continuity and produces smoother, more coherent outlines suitable for the final output.
 
 
-## 📁 Image Processing Files Overview
-
+## 📁 Image Processing Files Overview 
 **📦 Filter Modules** 
 
 | File Name                        | Purpose                  | Description |
 |----------------------------------|--------------------------|-------------|
 | `src/main.py`                    | Pipeline Orchestration   | Acts as the main controller of the system. Scans the `/input` directory, validates file stability, executes each image processing stage in sequence, and handles output saving and fallback logic. |
-| src/filter_01_bg_removal.py    | Background Removal       | Uses an AI-based segmentation model (U²-Net) to isolate the subject from the background. Outputs a subject-on-white image and a binary foreground mask for later processing. |
-| src/filter_02_gaussian_blur.py | Noise Reduction          | Applies Gaussian Blur to reduce texture noise and minor intensity variations that may interfere with edge detection. |
-| src/filter_03_grayscale.py    | Intensity Simplification | Converts the blurred color image into a single-channel grayscale image to simplify edge detection based on intensity changes. |
-| src/filter_04_edge_detect.py   | Edge / Line Extraction   | Extracts dominant contours and outlines from the grayscale image. Uses the foreground mask to suppress background artifacts and produce clean line art. |
-| src/filter_05_morphology.py    | Boundary Refinement      | Refines raw edges using morphological operations. Removes small noise components, reconnects broken lines, thickens strokes, and smooths contours for final output quality. |
+| `src/filter_01_bg_removal.py`  | Background Removal       | Uses an AI-based segmentation model (U²-Net) to isolate the subject from the background. Outputs a subject-on-white image and a binary foreground mask for later processing. |
+| `src/filter_02_gaussian_blur.py` | Noise Reduction          | Applies Gaussian Blur to reduce texture noise and minor intensity variations that may interfere with edge detection. |
+| `src/filter_03_grayscale.py`    | Intensity Simplification | Converts the blurred color image into a single-channel grayscale image to simplify edge detection based on intensity changes. |
+| `src/filter_04_edge_detect.py`   | Edge / Line Extraction   | Extracts dominant contours and outlines from the grayscale image. Uses the foreground mask to suppress background artifacts and produce clean line art. |
+| `src/filter_05_morphology.py`    | Boundary Refinement      | Refines raw edges using morphological operations. Removes small noise components, reconnects broken lines, thickens strokes, and smooths contours for final output quality. |
 
 The image processing engine is implemented using OpenCV (cv2) with AI-assisted background segmentation.
 The pipeline follows a deterministic, stage-based flow.
 
 <br>
 
-## 📥 Ingestion**
+## 📥 Ingestion
 
 src/main.py runs in an automated hot-folder mode that scans /input for valid image files.
 
@@ -222,7 +221,7 @@ File: filter_01_bg_removal.py
 
 <br>
 
-## 🎛️ Pre-Edge Conditioning**
+## 🎛️ Pre-Edge Conditioning
 
 Gaussian Blur: Noise reduction using cv2.GaussianBlur()
 
@@ -233,7 +232,7 @@ filter_02_gaussian_blur.py, filter_03_grayscale.py
 
 <br>
 
-## ✂️ Edge Detection**
+## ✂️ Edge Detection
 
 Contours are extracted from the grayscale image, with background suppression using the foreground mask.
 
@@ -242,7 +241,7 @@ Output: 04_lineart_raw.png
 
 <br>
 
-## 🧩 Morphological Refinement**
+## 🧩 Morphological Refinement
 
 Edges are cleaned and thickened for visual clarity.
 
@@ -256,7 +255,7 @@ Final Output: 05_coloring_book.png
 
 <br>
 
-## 💾 Export & Safety**
+## 💾 Export & Safety
 
 All outputs are saved using cv2.imwrite().
 A fallback mechanism guarantees final output generation.
