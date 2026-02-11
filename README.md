@@ -64,7 +64,7 @@ python src/main.py
 10. **Execute Automated Tests Verify the logic using the team's Shared Tools.**
 ```bash
 pytest -vv -s
-`
+```
 
 ## 🚦 Status & Traceability Matrix
 
