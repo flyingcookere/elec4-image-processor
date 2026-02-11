@@ -276,6 +276,36 @@ A fallback mechanism guarantees final output generation.
 Implementation: process_one_image()
 
 
+## 🧪 Quality Assurance (Automated Testing)(Luis)
+
+**Test Directory:** `tests/`  
+**Documenter Source:** `PyTest` terminal logs and GitHub Actions history
+
+The system ensures reliability through `PyTest`. Automated tests verify the full lifecycle of an image from the `input/` folder to the final `output/` directory, ensuring no data is lost or corrupted during the transformation.
+
+### 📡 Detection & I/O Success
+* **File Discovery:** Automatically verifies the correct identification and staging of image files from `tests/assets/` into the `input/` folder for processing.
+* **Subprocess Execution:** Confirms the system’s ability to execute `src/main.py` successfully, capturing `stdout` and `stderr` to ensure no runtime crashes occur.
+* **Directory Management:** Automatically creates and cleans up image-specific subdirectories within the `output/` folder after each test run to maintain repository hygiene.
+* **File location:** `tests/test_processor.py`
+
+### 🔍 Filter Logic Validation
+* **Grayscale Gate:** Mathematically confirms that the grayscale filter produces a single-channel look by verifying that Blue, Green, and Red channels are identical ($B=G=R$).
+* **Blur Verification:** Uses **Laplacian variance** to calculate image sharpness, ensuring the Gaussian blur filter successfully reduces high-frequency detail compared to the original.
+* **Background Removal:** Samples a 10x10 pixel patch in the corners to ensure a pure white background (>235 mean intensity) and checks standard deviation to ensure the subject exists.
+* **File location:** `tests/test_processor.py`
+
+
+
+### 🖋️ Line Art & Integrity
+* **Edge Density Check:** Analyzes `04_lineart_raw.png` to ensure the white-to-black ratio falls between 30% and 99%, preventing noisy or over-saturated outlines.
+* **Contrast & Binarization:** Measures the "gray ratio" in the final coloring book output; tests fail if more than 25% of pixels are mid-tones, ensuring a high-contrast result.
+* **Connectivity Analysis:** Uses `connectedComponentsWithStats` to analyze the "ink" mask, verifying that lines are continuous and meet a minimum average segment size (>3px).
+* **File location:** `tests/test_processor.py`
+
+### 🚀 Resilience Testing
+* **Corruption Gate:** Utilizes `cv2.imread()` validation to ensure processed files are readable and not corrupted during the "Rotify" execution pipeline.
+* **Time-Out Protection:** Executes a "Stress-Test" with a 180-second timeout to ensure the OpenCV compute engine remains stable and does not hang on complex images.
 
 Prerequisites
 Python Version: 3.10+
