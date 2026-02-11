@@ -167,7 +167,7 @@ After ingestion, the image undergoes initial transformation to prepare it for ed
 To reduce noise and small texture details that may interfere with edge extraction, we used cv2.GaussianBlur() to smooth the image. This step minimizes high-frequency noise while preserving the overall structure of the subject.
 After noise reduction, the smoothed image is converted into grayscale using cv2.cvtColor() with the cv2.COLOR_BGR2GRAY flag. This conversion reduces the image to a single intensity channel, which is required for reliable edge detection since edges are based on changes in pixel intensity rather than color.
 
-## 🧠 Image Processing Logic
+# 🧠 Image Processing Logic
 
 ## ✂️ Canny Edge Detection (Edge Identification)
 
