@@ -154,7 +154,7 @@ We implemented advanced Industry Workflows to maintain high velocity without sac
 
 
 
-### 🖼️ Image Processing Lead 
+# 🖼️ Image Processing Lead 
 
 ## 📥 Ingestion (Scanning the /input Directory)**
 
@@ -169,12 +169,12 @@ After noise reduction, the smoothed image is converted into grayscale using cv2.
 
 ## 🧠 Image Processing Logic
 
-# ✂️ Canny Edge Detection (Edge Identification)
+## ✂️ Canny Edge Detection (Edge Identification)
 
 To identify edges and object boundaries in the image, we used cv2.Canny(). This function detects edges by analyzing intensity gradients and locating areas with significant brightness changes.
 The Canny algorithm internally applies non-maximum suppression to thin the edges and uses a dual-threshold hysteresis process to classify strong and weak edges. Strong edges are retained, while weak edges are preserved only if they are connected to strong edges. This approach allows meaningful contours to be detected while suppressing isolated noise.
 
-# 🧩 Morphological Closing (Boundary Refinement)
+## 🧩 Morphological Closing (Boundary Refinement)
 
 The edge map produced by the Canny detector may contain broken lines and small gaps. To refine these boundaries, we applied morphological closing.
 We used cv2.getStructuringElement() to define the shape and size of the morphological kernel. Using this kernel, we applied dilation with cv2.dilate() to connect broken edge segments, followed by erosion with cv2.erode() to restore proper line thickness.
