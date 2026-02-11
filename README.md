@@ -211,7 +211,7 @@ Loads images using cv2.imread()
 Implementation: watch_and_process(), is_file_stable()
 
 
-**🧍 Background Removal**
+## 🧍 Background Removal
 
 The subject is isolated using an AI-based background remover (U²-Net) to prevent unwanted background edges.
 
