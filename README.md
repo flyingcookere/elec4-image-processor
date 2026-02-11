@@ -40,15 +40,31 @@ cv2.addWeighted(): Blends two images together (often used to overlay detected ed
 
 ## ▶️ How to Run Locally
 Follow these steps to run the project on your computer:
-
-1. Clone the repository
-(git clone < repository-url >)
-2. Navigate into the project folder
-(cd project-folder)
-3. Install dependencies
-(pip install opencv-python numpy pytest)
-4. Run the image processing script
-(python main.py)
+1. **Clone the Repository:** 
+```bash
+git clone https://github.com/flyingcookere/elec4-image-processor.git
+```
+2. **Navigate into the project folder**
+```bash
+cd elec4-image-processor
+```
+4. **Set up a Virtual Environment**
+```bash
+python -m venv venv
+.\venv\Scripts\activate
+```
+6. **Install dependencies**
+```bash
+pip install -r requirements.txt
+```
+8. **Run the image processing script**
+```bash
+python src/main.py
+```
+10. **Execute Automated Tests Verify the logic using the team's Shared Tools.**
+```bash
+pytest -vv -s
+`
 
 ## 🚦 Status & Traceability Matrix
 
@@ -83,3 +99,52 @@ Follow these steps to run the project on your computer:
 
 Prerequisites
 Python Version: 3.10+
+
+
+### ⚙️ DevOps & Observability Workflow
+**Configuration Path:** [`.github/workflows/ci.yml`](.github/workflows/ci.yml)
+
+The project implements a comprehensive *CI* (Continuous Integration) pipeline to ensure systemic reliability and shared visibility across the entire software lifecycle. This automation acts as a neutral middleman, ensuring that every code change is validated before being archived for release.
+
+* **Continuous Integration (CI)**
+  * **Linting**: Automatically executes Flake8 to enforce coding standards and catch syntax errors (E9, F63, F7, F82) before the build starts.
+  * **Logic Validation**: Runs the Pytest suite to verify OpenCV filter accuracy and image handling logic across test cases.
+* **Continuous Delivery & Release (CD)**
+  * **Operate**: Automatically initializes the output/ directory structure and logs start times to ensure a consistent workspace for every run.
+  * **Automated Artifact Packaging**: Upon successful testing, the pipeline archives the processing results and the HTML Test Report as a "Quality-Package-Run," making them available for immediate download.
+* **Continuous Feedback & Monitoring**
+  * **Shared Visibility**: Integrates Advanced PR Comments that link directly to build artifacts, allowing stakeholders to see real-time results without leaving the GitHub interface.
+  * **Traceability**: Every build is tagged with a unique run number, ensuring that every result in the output/ gallery can be traced back to the specific code version that generated it.
+ 
+
+## 📈 Process Evolution (Workflow & Documentation) (done)
+**Strategy**: Industry-Standard SDLC
+
+We implemented advanced Industry Workflows to maintain high velocity without sacrificing code quality. Our process is built on a "Shared Responsibility" foundation, ensuring every line of code is verified by the team before reaching the production state.
+
+### 📋 Project Management & Traceability
+* **No Issue, No Work Policy**: Development is strictly demand-driven. No code is authored or merged unless it addresses a pre-existing, documented Issue in GitHub or Jira.
+* **Mandatory PR Linking**: Every Pull Request must be linked to specific Issues to create a permanent audit trail. This ensures Shared Visibility for all stakeholders.
+* **Granular Organization**:
+  * **Tags & Labels**: Issues utilize a multi-tag system (e.g., critical, feature, documentation) for efficient filtering and priority management.
+  * **Clear Ownership**: Every Issue is assigned to a specific collaborator, ensuring clear accountability for every project component.
+* **Automated Progress Tracking**: By leveraging GitHub Projects, version history and progress tracking are automated. This serves as the "Single Source of Truth" for the team to view real-time status without manual reporting.
+
+### 🖊️ Governance & Standardization
+* **Standardized Formatting**:
+  * **Commit Messages**: We follow a strict prefix-based convention to maintain a professional and readable Git history.
+  * **PR Titles**: Titles follow standardized naming conventions to facilitate easy auditing during release cycles.
+* **The Contributor's Guide**: A documentation resource was established to onboard collaborators and enforce standards regarding branching strategies and coding styles.
+* **Visual Proof of Work**: All PR descriptions are required to include screenshots or terminal logs (e.g., pytest output) as evidence of local verification.
+
+### 🛡️ Quality & Gatekeeper Protocols
+* **Gatekeeper Protocol**: A strict **No Direct Push** policy is enforced on the main branch to protect production-ready code. This is enforced via GitHub branch protection and the [**CODEOWNERS**] file.
+* **Automated Logic Validation**: Our GitHub Actions CI suite serves as an automated gatekeeper, running flake8 and pytest checks on every push. Merges are blocked unless all status checks pass.
+* **Zero Documentation Debt**: We maintain **Living Documentation** within the repository to ensure the README accurately reflects the exact state of the project board at all times.
+
+### 📂 Governance Resources
+| File / Resource | Location | Purpose | 
+| :--- | :--- | :--- |
+| **CODEOWNERS** | [`./.github/CODEOWNERS`](./.github/CODEOWNERS) | Automated assignment of code testers and reviewers for src/. | 
+| **CI Workflow** | [`.github/workflows/ci.yml`](./.github/workflows/ci.yml) | Automated gatekeeper for linting and logic validation. | 
+| **Project Board** | [GitHub Projects](https://github.com/users/flyingcookere/projects/2/views/1) | Automated tracking of milestones, tags, and assignees. |
