@@ -78,7 +78,7 @@ pytest -vv -s
 | :--- | :--- | :--- | :--- | :--- |
 | **REQ-01** | Auto-detect images in input directory | ✅ DONE | [https://github.com/flyingcookere/elec4-image-processor/milestone/2](| [https://github.com/flyingcookere/elec4-image-processor/issues/6] |
 | **REQ-02** | Apply 2+ OpenCV techniques | ✅ DONE | [https://github.com/flyingcookere/elec4-image-processor/milestone/3] | [https://github.com/flyingcookere/elec4-image-processor/issues/13 , https://github.com/flyingcookere/elec4-image-processor/issues/14] |
-| **REQ-03** | Save to output directory | ✅ DONE | [https://github.com/flyingcookere/elec4-image-processor/milestone/4] | [#13] |
+| **REQ-03** | Save to output directory | ✅ DONE | [https://github.com/flyingcookere/elec4-image-processor/milestone/4] | https://github.com/flyingcookere/elec4-image-processor/issues/30 |
 | **REQ-04** | GitHub Actions Pipeline (Run on Push) | ✅ DONE | [https://github.com/flyingcookere/elec4-image-processor/milestone/1] | [https://github.com/flyingcookere/elec4-image-processor/issues/3] |
 
 ## ✨ Key Features
@@ -167,21 +167,21 @@ After ingestion, the image undergoes initial transformation to prepare it for ed
 To reduce noise and small texture details that may interfere with edge extraction, we used cv2.GaussianBlur() to smooth the image. This step minimizes high-frequency noise while preserving the overall structure of the subject.
 After noise reduction, the smoothed image is converted into grayscale using cv2.cvtColor() with the cv2.COLOR_BGR2GRAY flag. This conversion reduces the image to a single intensity channel, which is required for reliable edge detection since edges are based on changes in pixel intensity rather than color.
 
-### 🧠 Image Processing Logic
+## 🧠 Image Processing Logic
 
-## ✂️ Canny Edge Detection (Edge Identification)**
+# ✂️ Canny Edge Detection (Edge Identification)
 
 To identify edges and object boundaries in the image, we used cv2.Canny(). This function detects edges by analyzing intensity gradients and locating areas with significant brightness changes.
 The Canny algorithm internally applies non-maximum suppression to thin the edges and uses a dual-threshold hysteresis process to classify strong and weak edges. Strong edges are retained, while weak edges are preserved only if they are connected to strong edges. This approach allows meaningful contours to be detected while suppressing isolated noise.
 
-## 🧩 Morphological Closing (Boundary Refinement)**
+# 🧩 Morphological Closing (Boundary Refinement)
 
 The edge map produced by the Canny detector may contain broken lines and small gaps. To refine these boundaries, we applied morphological closing.
 We used cv2.getStructuringElement() to define the shape and size of the morphological kernel. Using this kernel, we applied dilation with cv2.dilate() to connect broken edge segments, followed by erosion with cv2.erode() to restore proper line thickness.
 This sequence effectively performs morphological closing, which improves boundary continuity and produces smoother, more coherent outlines suitable for the final output.
 
 
-## 📁 Image Processing Files Overview 
+# 📁 Image Processing Files Overview 
 **📦 Filter Modules** 
 
 | File Name                        | Purpose                  | Description |
