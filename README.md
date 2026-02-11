@@ -156,12 +156,12 @@ We implemented advanced Industry Workflows to maintain high velocity without sac
 
 # 🖼️ Image Processing Lead 
 
-## 📥 Ingestion (Scanning the /input Directory)**
+## 📥 Ingestion (Scanning the /input Directory)
 
 The image processing pipeline begins by scanning the /input directory for newly added image files. Once a stable image file is detected, it is loaded into the system using OpenCV. At this stage, no image enhancement or transformation is applied, as the primary objective is only to acquire the raw image data for processing.
 We used cv2.imread() to read the input image file and convert it into a matrix representation that can be processed by succeeding OpenCV functions.
 
-## 🎛️ Initial Transformation (Gaussian Blur and Grayscale Conversion)**
+## 🎛️ Initial Transformation (Gaussian Blur and Grayscale Conversion)
 
 After ingestion, the image undergoes initial transformation to prepare it for edge detection.
 To reduce noise and small texture details that may interfere with edge extraction, we used cv2.GaussianBlur() to smooth the image. This step minimizes high-frequency noise while preserving the overall structure of the subject.
@@ -210,7 +210,6 @@ Loads images using cv2.imread()
 
 Implementation: watch_and_process(), is_file_stable()
 
-<br>
 
 **🧍 Background Removal**
 
@@ -222,7 +221,6 @@ Mask is dilated using cv2.dilate() to preserve fine details
 
 File: filter_01_bg_removal.py
 
-<br>
 
 ## 🎛️ Pre-Edge Conditioning
 
@@ -233,7 +231,6 @@ Grayscale: Intensity simplification using cv2.cvtColor(..., COLOR_BGR2GRAY)
 Files:
 filter_02_gaussian_blur.py, filter_03_grayscale.py
 
-<br>
 
 ## ✂️ Edge Detection
 
@@ -242,7 +239,6 @@ Contours are extracted from the grayscale image, with background suppression usi
 File: filter_04_edge_detect.py
 Output: 04_lineart_raw.png
 
-<br>
 
 ## 🧩 Morphological Refinement
 
@@ -256,7 +252,6 @@ OpenCV Ops: connectedComponentsWithStats(), dilate(), medianBlur()
 File: filter_05_morphology.py
 Final Output: 05_coloring_book.png
 
-<br>
 
 ## 💾 Export & Safety
 
